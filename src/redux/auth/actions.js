@@ -21,7 +21,7 @@ function loginFailureActionCreator(message) {
 export const signupThunk = (patient) => async (dispatch) => {
   try {
     const response = await axios.post(
-      `${process.env.REACT_APP_API_SERVER}/api/patient/signup`,
+      `${process.env.REACT_APP_API_SERVER}/api/signup`,
       {...patient}
     );
 
@@ -41,8 +41,9 @@ export const loginUserThunk = (email, password) => async (dispatch) => {
     dispatch({ type: LOGIN_REQUEST_ACTION });
     console.log(email, password);
     const response = await axios.post(
-      `${process.env.REACT_APP_API_SERVER}/api/patient/login`,
+      `${process.env.REACT_APP_API_SERVER}/api/login`,
       {
+        type: "patients",
         email: email,
         password: password,
       }
@@ -77,7 +78,7 @@ export function loginFacebookThunk(data) {
   console.log("thunk thunk thunk ");
   return (dispatch) => {
     return axios
-      .post(`${process.env.REACT_APP_API_SERVER}/api/patient/login/facebook`, {
+      .post(`${process.env.REACT_APP_API_SERVER}/api/login/facebook`, {
         info: data,
       })
       .then((response) => {
