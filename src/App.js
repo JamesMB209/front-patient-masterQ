@@ -4,12 +4,17 @@ import socketIOClient from 'socket.io-client';
 import { Routes, BrowserRouter, Link, Route, Navigate } from 'react-router-dom';
 import { logoutNowThunk } from './redux/auth/actions';
 import { Navbar, NavItem, Container } from 'react-bootstrap';
+import axios from 'axios';
 
 import LoginPage from './pages/LoginPage';
 import BookingPage from './pages/BookingPage';
 import ActivePage from './pages/ActivePage';
+import { loadConfigThunk } from './redux/appConfig/actions';
 
 function App() {
+  let isAuthenticated = useSelector((state) => state.authStore.isAuthenticated);
+  const dispatch = useDispatch();
+  const onPageLoad = () => dispatch(loadConfigThunk());
   // const [response, setResponse] = useState("");
   // useEffect(() => {
   //   const socket = socketIOClient(process.env.REACT_APP_API_SERVER, {transports: ['websocket']});
@@ -20,8 +25,15 @@ function App() {
   //   return () => socket.disconnect();
   // }, []);
   
-    let isAuthenticated = useSelector((state) => state.authStore.isAuthenticated);
-    const dispatch = useDispatch();
+
+  useEffect(() => {
+    onPageLoad();
+  }, []);
+
+
+  
+
+  
   
     return (
       <BrowserRouter>

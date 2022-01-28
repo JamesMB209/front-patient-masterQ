@@ -62,7 +62,7 @@ export const loginUserThunk = (email, password) => async (dispatch) => {
       });
     } else {
       localStorage.setItem("token", data.token);
-      dispatch({ type: LOGIN_SUCCESS_ACTION });
+      dispatch({ type: LOGIN_SUCCESS_ACTION, config: data.config, businessConfig: data.businessConfig});
     }
   } catch (err) {
     console.log("ERROR " + err);
