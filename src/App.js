@@ -11,6 +11,11 @@ import BookingPage from './pages/BookingPage';
 import ActivePage from './pages/ActivePage';
 import { loadConfigThunk } from './redux/appConfig/actions';
 
+//pris added 30/1
+import Theme from './components/Theme';
+
+import "./App.scss"
+
 function App() {
   let isAuthenticated = useSelector((state) => state.authStore.isAuthenticated);
   const dispatch = useDispatch();
@@ -38,8 +43,9 @@ function App() {
     return (
       <BrowserRouter>
         <div className="App">
-          <Navbar bg="dark">
+          <Navbar className="navbar">
             <Container>
+          
               <NavItem>
                 <Link to="/booking">Online Booking</Link>
               </NavItem>
@@ -57,7 +63,9 @@ function App() {
                   <Link to="/login">Login/SignUp</Link>
                 </NavItem>
               )}
+                <Theme />
             </Container>
+         
           </Navbar>
   
           <Routes>

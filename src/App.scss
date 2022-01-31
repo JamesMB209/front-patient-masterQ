@@ -1,0 +1,45 @@
+@import './Variables/Variables.scss' ;
+
+.App {
+  text-align: center;
+}
+
+/* .App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+} */
+
+.navbar {
+  background-color: $blueOne;
+  height: 5vh;
+  color: $white;
+  text-decoration: none;
+}
+
+.theme {
+  background-color: white;
+  padding: 2em;
+}
+
+.theme.dark {
+  background-color: rgb(39, 39, 39);
+  color: white;
+}
+
+.addDarkMode {
+  border: 0;
+  margin-left: 1em;
+  padding: 1em;
+  background-color: pink;
+}
+
+.addDarkMode.dark {
+  background-color: red;
+  color: white;
+}
