@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { loginUserThunk, loginFacebookThunk } from "../redux/auth/actions";
+import { loginUserThunk /** ,loginFacebookThunk */} from "../redux/auth/actions";
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button';
 import SignUp from './Signup';
@@ -42,7 +42,6 @@ const Login = (props) => {
   // }
 
   return (
-    <div className='col-md-4'>
       <Form className='row'>
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>Email</Form.Label>
@@ -66,7 +65,6 @@ const Login = (props) => {
           onHide={() => setModalShow(false)}
         />
       </Form>
-    </div>
   );
 };
 

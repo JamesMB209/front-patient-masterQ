@@ -26,8 +26,6 @@ export const signupThunk = (patient) => async (dispatch) => {
     );
 
     const { data } = response;
-    console.log("request sent");
-    console.log(data);
     localStorage.setItem("token", data.token);
     dispatch({ type: LOGIN_SUCCESS_ACTION });
   } catch (err) {
@@ -62,7 +60,7 @@ export const loginUserThunk = (email, password) => async (dispatch) => {
       });
     } else {
       localStorage.setItem("token", data.token);
-      dispatch({ type: LOGIN_SUCCESS_ACTION, config: data.config, businessConfig: data.businessConfig});
+      dispatch({ type: LOGIN_SUCCESS_ACTION });
     }
   } catch (err) {
     console.log("ERROR " + err);
@@ -74,27 +72,27 @@ export const logoutNowThunk = () => (dispatch) => {
   dispatch({ type: LOGOUT_NOW_ACTION });
 };
 
-export function loginFacebookThunk(data) {
-  console.log("thunk thunk thunk ");
-  return (dispatch) => {
-    return axios
-      .post(`${process.env.REACT_APP_API_SERVER}/api/login/facebook`, {
-        info: data,
-      })
-      .then((response) => {
-        if (response.data == null) {
-          dispatch(loginFailureActionCreator("Unknown Error"));
-        } else if (!response.data.token) {
-          // If there was a problem, we want to
-          // dispatch the error condition
-          dispatch(loginFailureActionCreator(response.data.message || ""));
-        } else {
-          // If login was successful, set the token in local storage
-          localStorage.setItem("token", response.data.token);
-          // Dispatch the success action
-          dispatch(loginSuccessActionCreator());
-        }
-      })
-      .catch((err) => console.log("Error: ", err));
-  };
-}
+// export function loginFacebookThunk(data) {
+//   console.log("thunk thunk thunk ");
+//   return (dispatch) => {
+//     return axios
+//       .post(`${process.env.REACT_APP_API_SERVER}/api/login/facebook`, {
+//         info: data,
+//       })
+//       .then((response) => {
+//         if (response.data == null) {
+//           dispatch(loginFailureActionCreator("Unknown Error"));
+//         } else if (!response.data.token) {
+//           // If there was a problem, we want to
+//           // dispatch the error condition
+//           dispatch(loginFailureActionCreator(response.data.message || ""));
+//         } else {
+//           // If login was successful, set the token in local storage
+//           localStorage.setItem("token", response.data.token);
+//           // Dispatch the success action
+//           dispatch(loginSuccessActionCreator());
+//         }
+//       })
+//       .catch((err) => console.log("Error: ", err));
+//   };
+// }

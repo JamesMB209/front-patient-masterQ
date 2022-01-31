@@ -8,7 +8,6 @@ export function loadConfigThunk() {
         return axios.get(`${process.env.REACT_APP_API_SERVER}/api/config`, {
             headers: { Authorization: `Bearer ${token}` }
         }).then((response) => {
-            console.log(response.data)
             return dispatch({
                 type: LOAD_CONFIG,
                 data: response.data

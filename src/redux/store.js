@@ -7,7 +7,7 @@ import { appConfigReducer } from "./appConfig/reducers";
 
 const rootReducer = combineReducers({
   authStore: authReducer,
-  queueStatus: queueReducer,
+  queueStore: queueReducer,
   appConfigStore: appConfigReducer
 });
 
@@ -15,5 +15,5 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 export const store = createStore(
   rootReducer,
-  composeEnhancers(applyMiddleware(logger, thunk))
+  composeEnhancers(applyMiddleware( thunk))
 );
