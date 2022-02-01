@@ -1,0 +1,40 @@
+.App {
+  text-align: center;
+}
+
+/* .App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+} */
+.navbar {
+  height: 5vh;
+  text-decoration: none;
+}
+
+.theme {
+  background-color: white;
+  padding: 2em;
+}
+
+.theme.dark {
+  background-color: #272727;
+  color: white;
+}
+
+.addDarkMode {
+  border: 0;
+  margin-left: 1em;
+  padding: 1em;
+  background-color: pink;
+}
+
+.addDarkMode.dark {
+  background-color: red;
+  color: white;
+}/*# sourceMappingURL=App.css.map */

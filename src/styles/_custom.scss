@@ -1,0 +1,64 @@
+$blueOne: #00c4cc;
+$blueTwo: #3E87A7;
+$blueThree: #006c72;
+
+$white: white;
+
+$theme-colors: (
+    "info": $blueTwo,
+    "danger": teal,
+    "primary": $blueOne
+
+);
+
+@mixin center-all {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+h5 {
+    color: $blueTwo;
+    @include center-all;
+}
+
+.under-line {
+    color: $blueOne;
+    height: 3px !important;
+    width: 100px !important;
+    
+}
+
+.buttonOne {
+    color: white !important;
+    background-color: #00c4cc !important;
+    min-width: 250px !important;
+    margin-bottom: 5px !important;
+    box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.buttonOne:hover {
+    color: white !important;
+    background-color: $blueThree !important;
+}
+
+.buttonTwo {
+    color: white !important;
+    background-color: $blueTwo !important;
+    min-width: 250px !important;
+    margin-bottom: 5px !important;
+    box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.buttonTwo:hover {
+    color: white !important;
+    background-color: $blueThree !important;
+}
+
+
+
+
+/* import bootstrap to set changes (at the end of page) */
+@import "~bootstrap/scss/bootstrap";
