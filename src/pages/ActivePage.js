@@ -14,13 +14,11 @@ export default function ActivePage() {
   // const checkedIn = useSelector((state) => state.queueStore.checkedIn);
   const queueStore = useSelector((state) => state.queueStore);
   /** Check logged in */
-  // useEffect(() => {
-  //   if (auth !== true) {
-  //     navigate("/login");
-  //   }
-  // }, [auth, navigate]);
-
-  console.log("active page loaded again")
+  useEffect(() => {
+    if (auth !== true) {
+      navigate("/login");
+    }
+  }, [auth, navigate]);
 
   const dispatch = useDispatch();
 
