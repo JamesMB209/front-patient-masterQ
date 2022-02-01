@@ -11,10 +11,7 @@ import BookingPage from './pages/BookingPage';
 import ActivePage from './pages/ActivePage';
 import { loadConfigThunk } from './redux/appConfig/actions';
 
-//pris added 30/1
-import Theme from './components/Theme';
-
-import "./App.scss"
+import logo from './assets/logo-white.png'
 
 function App() {
   const dispatch = useDispatch();
@@ -22,37 +19,39 @@ function App() {
   let isAuthenticated = useSelector((state) => state.authStore.isAuthenticated);
 
   useEffect(() => {
-    console.log("I ran once")
-  })
-  useEffect(() => {
-    if (isAuthenticated === true) {
-      dispatch(loadConfigThunk())
-      console.log("how many times do i go")
+    onPageLoad();
+  }, []);
 
-    }
-  });
-  
+    return (
+      <BrowserRouter>
+        <div className="App">
+          <Navbar className="navbar">
+            <Container>
+            <Navbar.Brand href="#home">
+      <img
+        src={logo}
+        width="85"
+        height="85"
+        className="d-inline-block align-top"
+        alt="logo"
+      />
+    </Navbar.Brand>
 
-  return (
-    <BrowserRouter>
-      <div className="App">
-        <Navbar bg="dark">
-          <Container>
-            <NavItem>
-              <Link to="/booking">Online Booking</Link>
-            </NavItem>
-            <NavItem>
-              <Link to="/active">Checkin</Link>
-            </NavItem>
-            {isAuthenticated
+              <NavItem>
+                <Link to="/booking" className="nav-item">Online Booking</Link>
+              </NavItem>
+              <NavItem>
+                <Link to="/active" className="nav-item">Checkin</Link>
+              </NavItem>
+              {isAuthenticated 
               ? (
                 <NavItem>
-                  <Link to="/login" onClick={() => dispatch(logoutNowThunk())}>Logout</Link>
+                  <Link to="/login" onClick={() => dispatch(logoutNowThunk())} className="nav-item">Logout</Link>
                 </NavItem>
               )
               : (
                 <NavItem>
-                  <Link to="/login">Login/SignUp</Link>
+                  <Link to="/login" className="nav-item">Login/SignUp</Link>
                 </NavItem>
               )}
           </Container>

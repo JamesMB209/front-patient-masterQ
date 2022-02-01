@@ -88,21 +88,21 @@ export default function SignUp(props) {
             <Form.Control value={phone} onChange={(e) => { setPhone(e.target.value) }} />
 
             {/* Drug Allerges */}
-            <Form.Label>Drug allerges</Form.Label>
+            <Form.Label>Drug Allergies</Form.Label>
             <Form.Control value={drugAllergies} onChange={(e) => { setDrugAllergies(e.target.value) }} />
 
           </Form.Group>
         </Form>
       </Modal.Body>
       <Modal.Footer>
-        <Button className="mx-1" variant="primary" type="submit" onClick={(e) => {
+        <Button className="mx-1 buttonOne" variant="primary" type="submit" onClick={(e) => {
           signUp();
           console.log("clicked")
           // props.onHide();
         }}>
           Sign Up
         </Button>
-        <Button onClick={props.onHide}>Close</Button>
+        <Button onClick={props.onHide} variant="secondary">Close</Button>
       </Modal.Footer>
     </Modal>
   );
