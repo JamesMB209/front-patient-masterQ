@@ -15,30 +15,38 @@ export default function InQueue(props) {
   const [queuePosition, setQueuePosition] = useState('');
 
   //Set up socket connection
+  let token = localStorage.getItem("token");
+
   useEffect(() => {
-    let token = localStorage.getItem("token");
     setSocket(socketIOClient(process.env.REACT_APP_API_SERVER, {
       transports: ['websocket'],
       query: { token }
     }))
-  },[]);
-  
+  }, []);
+
   //Set up listeners and close conection if they die.
   useEffect(() => {
     if (!socket) return;
     socket.emit("JOIN_ROOM", { ...queueStore });
-    socket.on("updatePatient", (queuePosition) => {
+
+    socket.on("UPDATE_PATIENT", () => {
+      socket.emit("GET_QUEUE_POSTITION", { ...queueStore });
+    })
+
+    socket.on(token, (queuePosition) => {
+      console.log("triggered for me and not for the")
+      console.log(queuePosition)
       setQueuePosition(queuePosition);
     });
-    
-    return () =>  socket.disconnect();
-  },[socket]);
+
+    return () => socket.disconnect();
+  }, [socket]);
 
   return (
     <>
       <p>{queuePosition}</p>
-      <NestedComp que={queuePosition}/>
-      <button onClick={() => { socket.emit("next", { ...queueStore }) }}>test button to advance the doctors queue</button>
+      <NestedComp que={queuePosition} />
+      <button onClick={() => { socket.emit("NEXT", { ...queueStore }) }}>test button to advance the doctors queue</button>
     </>
   );
 }
