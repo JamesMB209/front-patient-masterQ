@@ -19,8 +19,10 @@ function App() {
   let isAuthenticated = useSelector((state) => state.authStore.isAuthenticated);
 
   useEffect(() => {
-    onPageLoad();
-  }, []);
+    if (isAuthenticated === true) {
+      dispatch(loadConfigThunk())
+    }
+  });
 
     return (
       <BrowserRouter>

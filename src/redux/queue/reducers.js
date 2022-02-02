@@ -1,25 +1,20 @@
 import {
-    CHECKIN_ACTION,
-    CHECKOUT_ACTION,
-    MOVE_PHARAMACY_ACTION,
-    REVIEW_ACTION,
+    UPDATE_QUEUE,
 } from "./actions";
 
 const initialState = {
-    checkedIn: false, business: '', doctor: ''
+    state: 'CHECKIN', business: '', doctor: '', queuePosition: ''
 };
 
 export function queueReducer(state = initialState, action) {
     switch (action.type) {
-        case CHECKIN_ACTION:
-            return Object.assign({}, state, { checkedIn: true }, { business: action.business }, { doctor: action.doctor });
-        case CHECKOUT_ACTION:
-            return Object.assign({}, state, { checkedIn: false });
-        case MOVE_PHARAMACY_ACTION:
-            return state;
-        case REVIEW_ACTION:
-            return state;
+        case UPDATE_QUEUE:
+            console.log(action);
+            // return Object.assign({}, state, { state:"DOCTOR" }, { business: "7" }, { doctor: "10" }, { queuePosition: action.queuePostion });
+            return Object.assign({}, state, { state:action.state }, { business: action.business }, { doctor: action.doctor }, { queuePosition: action.queuePosition });
         default:
+            console.log(action.type)
+            console.log("triggered")
             return state;
     }
 }
