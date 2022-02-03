@@ -7,85 +7,99 @@ import socketIOClient from 'socket.io-client';
 
 import Checkin from "../components/Checkin";
 import InQueue from "../components/InQueue";
-import { updatePatient } from "../redux/queue/actions";
+import { doctorNext, doctorNextThunk, updatePatient } from "../redux/queue/actions";
 import { propTypes } from "react-bootstrap/esm/Image";
+import { emit } from '../redux/webSockets/actions'
+
+
 
 export default function ActivePage() {
-  /** Load inital states */
-  const navigate = useNavigate();
-  const auth = useSelector((state) => state.authStore.isAuthenticated);
+  // /** Load inital states */
+  // const navigate = useNavigate();
+  // const auth = useSelector((state) => state.authStore.isAuthenticated);
   const queueStore = useSelector((state) => state.queueStore);
-  const [socket, setSocket] = useState(null)
-  // const [queuePosition, setQueuePosition] = useState('');
+  // const [socket, setSocket] = useState(null)
+  // const [data, setData] = useState(queueStore)
+  // // const [queuePosition, setQueuePosition] = useState('');
 
-  /** Check logged in */
-  useEffect(() => {
-    if (auth !== true) {
-      navigate("/login");
-    }
-  }, [auth, navigate]);
+  // /** Check logged in */
+  // useEffect(() => {
+  //   if (auth !== true) {
+  //     navigate("/login");
+  //   }
+  // }, [auth, navigate]);
 
   const dispatch = useDispatch();
 
-  //Set up socket connection
-  let token = localStorage.getItem("token");
+  // //Set up socket connection
+  // let token = localStorage.getItem("token");
 
-  useEffect(() => {
-    setSocket(socketIOClient(process.env.REACT_APP_API_SERVER, {
-      transports: ['websocket'],
-      query: { token }
-    }))
-  }, []);
+  // useEffect(() => {
+  //   setSocket(socketIOClient(process.env.REACT_APP_API_SERVER, {
+  //     transports: ['websocket'],
+  //     query: { token }
+  //   }))
+  // }, []);
 
-  //Set up listeners and close conection if they die.
-  useEffect(() => {
-    if (!socket) return;
-    console.log("active use effect")
+  // useEffect(() => {
+  //   if (!socket) return;
     
+  //   console.log("I RAN I RAN I FUCKIGN RAN")
+    
+  //   socket.on("UPDATE_PATIENT", () => reqUpdate())
+    
+  //   let address = token.slice(-10)
+  //   socket.on(address, handleUpdate)
 
-    socket.on("UPDATE_PATIENT", () => {
-      console.log('--------update patient --------')
-      console.log(queueStore)
-      socket.emit("GET_PATIENT_OBJ", { ...queueStore });
-    })
+  //   // return () => socket.disconnect();
+  // }, [socket]);
 
-    socket.on(token, (patient) => {
-      if (patient == "patient not found.") {
-        console.log("end of the line")
-      }
-      console.log('--------on token --------')
-      console.log(patient)
-      // console.log(queueStore.business, queueStore.doctor, patient.queuePosition, patient.state);
-      console.log('----------------')
-      dispatch(updatePatient(queueStore.business, patient.doctor, patient.queuePosition, patient.state))
+  // console.log("component was reloaded")
+  // console.log(queueStore)
 
-    })
+  // // const callBack = () => {
+  // //   reqUpdate()
+  // // }
 
-    // return () => socket.disconnect();
-  }, [queueStore]);
+  // const reqUpdate = () => {
+  //   console.log("handle update ran")
+  //   console.log(queueStore)
+  //     socket.emit("GET_PATIENT_OBJ", {...queueStore} );
+  // }
 
-  useEffect(() => {
-    if (!socket) return;
-    return () => socket.disconnect();
-  }, [socket]);
+  // const handleUpdate = (patient) => {
+  //   console.log("handle patient ran")
+  //   console.log(patient)
+  //   // dispatch(updatePatient(queueStore.business, patient.doctor, patient.queuePosition, patient.state))
+  //   setData({business:queueStore.business, doctor:patient.doctor, state:patient.state, queuePosition:patient.queuePosition})
+  // }
 
-  function checkInButton (business, doctor) {
-    dispatch(updatePatient(business, doctor))
-    socket.emit("CHECKIN", { business:business, doctor:doctor })
-    socket.emit("JOIN_ROOM", { business:business, doctor:doctor });
+  // useEffect(() => {
+  //   if (!socket) return;
+
+  //   return () => socket.disconnect();
+  // }, [socket]);
+
+
+  const click = () => {
+    console.log('clicked')
+    dispatch(doctorNextThunk(1,1))
   }
 
+  const [pageMode, setPageMode] = useState("CHECKIN")
 
   return (
     <>
-      {queueStore.state === "CHECKIN" ? <Checkin cb={checkInButton}/> : ""}
-      {queueStore.state === "DOCTOR" ? <InQueue /> : ""}
-      {queueStore.state === "PHARMACY" ? <Pharmacy /> : ""}
-
+    action page
+    <Button onClick={click}>clicky clicky</Button>
+       {queueStore.state === "CHECKIN" ? <Checkin /> : ""}
+       {queueStore.state === "DOCTOR" ? <InQueue queuePosition={queueStore.queuePosition}/> : ""}
+       {queueStore.state === "PHARMACY" ? <Pharmacy /> : ""}
+    
       {/* <Button onClick={() => { dispatch(checkOut()) }}>Checkout - testing</Button> */}
-      <Button onClick={() => { socket.emit("NEXT", { ...queueStore }) }}>advance the doctors queue</Button>
-      {/* <Button onClick={() => { socket.emit("CHECKIN", { ...queueStore }) }}>check in socket </Button> */}
-      {/* <Button onClick={() => { socket.emit("JOIN_ROOM", { ...queueStore }) }}>join room </Button> */}
-    </>
+      {/* <Button onClick={() => { socket.emit("NEXT", { ...queueStore }) }}>advance the doctors queue</Button>
+       {/* <Button onClick={() => { socket.emit("CHECKIN", { ...queueStore }) }}>check in socket </Button> */}
+       {/* <Button onClick={() => { socket.emit("JOIN_ROOM", { ...queueStore }) }}>join room </Button> */}
+     </>
   );
 }

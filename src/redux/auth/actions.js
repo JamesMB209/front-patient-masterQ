@@ -22,7 +22,7 @@ export const signupThunk = (patient) => async (dispatch) => {
   try {
     const response = await axios.post(
       `${process.env.REACT_APP_API_SERVER}/api/signup`,
-      {...patient}
+      {...patient, type: "patients"}
     );
 
     const { data } = response;
