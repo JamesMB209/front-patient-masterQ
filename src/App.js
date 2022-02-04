@@ -1,19 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Routes, BrowserRouter, Link, Route, } from 'react-router-dom';
 
-import { Routes, BrowserRouter, Link, Route, Navigate } from 'react-router-dom';
-import { logoutNowThunk } from './redux/auth/actions';
 import { Navbar, NavItem, Container } from 'react-bootstrap';
-import axios from 'axios';
 
 import LoginPage from './pages/LoginPage';
 import BookingPage from './pages/BookingPage';
 import ActivePage from './pages/ActivePage';
+
 import { loadConfigThunk } from './redux/appConfig/actions';
-import { emit, socket } from './redux/webSockets/actions';
+import { logoutNowThunk } from './redux/auth/actions';
 
 import logo from './assets/logo-white.png'
-import { updatePatient } from './redux/queue/actions';
+
 
 function App() {
   const dispatch = useDispatch();
@@ -22,21 +21,10 @@ function App() {
 
   useEffect(() => {
     if (isAuthenticated === true) {
-
-      console.log("app listner crweated")
-
-      const token = localStorage.getItem("token");
-      const address = token.slice(-10);
-
-      if (token == null) { return }
-
-      socket.on(address, (data) => {
-        dispatch(updatePatient(data))
-      })
-
       dispatch(loadConfigThunk())
     }
   });
+
 
   return (
     <BrowserRouter>

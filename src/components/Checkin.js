@@ -1,17 +1,20 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+
 import { Button } from "react-bootstrap";
 import Form from 'react-bootstrap/Form'
-import { updatePatient, checkIn, checkInSock } from "../redux/queue/actions";
+
+import { setConnection } from "../redux/conection/actions";
+import { emit, CHECKIN } from "../redux/webSockets/actions";
+
 
 export default function Checkin() {
     const dispatch = useDispatch();
 
     /** Load inital stores */
     const appConfig = useSelector((state) => state.appConfigStore);
-    const queueState = useSelector((state) => state.queueState);
 
-    /** Business and doctor drop down tab states */
+    /** Business and doctor drop down tab states for form submission */
     const [business, setBusiness] = useState('');
     const [doctor, setDoctor] = useState('');
 
@@ -30,7 +33,10 @@ export default function Checkin() {
                     {appConfig.doctors.filter(doctor => doctor.business_id == business).map(doctor => <option key={doctor.l_name} value={doctor.id}>Dr: {doctor.l_name}</option>)}
                 </Form.Select>
             </Form.Group>
-            <Button onClick={() => { dispatch(checkInSock({business:business, doctor:doctor})) }}>Check In</Button>
+            <Button onClick={() => {
+                dispatch(setConnection({ business: business, doctor: doctor }));
+                emit(CHECKIN, { business: business, doctor: doctor })
+            }}>Check In</Button>
         </Form>
     );
 };

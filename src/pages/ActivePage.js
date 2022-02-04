@@ -1,105 +1,70 @@
-import { useEffect, useState } from "react";
-import { Button } from "react-bootstrap";
-import { useSelector, useDispatch } from "react-redux";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import Pharmacy from "../components/Pharmacy";
-import socketIOClient from 'socket.io-client';
+import { useSelector, useDispatch } from "react-redux";
 
+import { Button } from "react-bootstrap";
+
+import Pharmacy from "../components/Pharmacy";
 import Checkin from "../components/Checkin";
 import InQueue from "../components/InQueue";
-import { doctorNext, doctorNextThunk, updatePatient } from "../redux/queue/actions";
-import { propTypes } from "react-bootstrap/esm/Image";
-import { emit } from '../redux/webSockets/actions'
+import { Review } from "../components/Review";
 
+import { emit } from '../redux/webSockets/actions'
+import { socket } from "../redux/webSockets/actions";
+import { UPDATE_PATIENT } from "../redux/webSockets/actions";
+import { loadObjThunk } from "../redux/patientObj/actions";
 
 
 export default function ActivePage() {
-  // /** Load inital states */
-  // const navigate = useNavigate();
-  // const auth = useSelector((state) => state.authStore.isAuthenticated);
-  const queueStore = useSelector((state) => state.queueStore);
-  // const [socket, setSocket] = useState(null)
-  // const [data, setData] = useState(queueStore)
-  // // const [queuePosition, setQueuePosition] = useState('');
-
-  // /** Check logged in */
-  // useEffect(() => {
-  //   if (auth !== true) {
-  //     navigate("/login");
-  //   }
-  // }, [auth, navigate]);
-
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  // //Set up socket connection
-  // let token = localStorage.getItem("token");
+  /** Load inital states */
+  const auth = useSelector((state) => state.authStore.isAuthenticated);
+  const state = useSelector((state) => state.patientObjStore.state);
+  const connection = useSelector((state) => state.connectionStore)
 
-  // useEffect(() => {
-  //   setSocket(socketIOClient(process.env.REACT_APP_API_SERVER, {
-  //     transports: ['websocket'],
-  //     query: { token }
-  //   }))
-  // }, []);
+  /** Check logged in */
+  useEffect(() => {
+    if (auth !== true) {
+      navigate("/login");
+    }
+  }, [auth, navigate]);
 
-  // useEffect(() => {
-  //   if (!socket) return;
-    
-  //   console.log("I RAN I RAN I FUCKIGN RAN")
-    
-  //   socket.on("UPDATE_PATIENT", () => reqUpdate())
-    
-  //   let address = token.slice(-10)
-  //   socket.on(address, handleUpdate)
-
-  //   // return () => socket.disconnect();
-  // }, [socket]);
-
-  // console.log("component was reloaded")
-  // console.log(queueStore)
-
-  // // const callBack = () => {
-  // //   reqUpdate()
-  // // }
-
-  // const reqUpdate = () => {
-  //   console.log("handle update ran")
-  //   console.log(queueStore)
-  //     socket.emit("GET_PATIENT_OBJ", {...queueStore} );
-  // }
-
-  // const handleUpdate = (patient) => {
-  //   console.log("handle patient ran")
-  //   console.log(patient)
-  //   // dispatch(updatePatient(queueStore.business, patient.doctor, patient.queuePosition, patient.state))
-  //   setData({business:queueStore.business, doctor:patient.doctor, state:patient.state, queuePosition:patient.queuePosition})
-  // }
-
-  // useEffect(() => {
-  //   if (!socket) return;
-
-  //   return () => socket.disconnect();
-  // }, [socket]);
+  /** Set up listners */
+  useEffect(() => {
+    console.log(connection)
+    socket.on(UPDATE_PATIENT, () => { dispatch(loadObjThunk(connection)) })
+    return () => {
+      socket.off(UPDATE_PATIENT)
+    }
+  }, [connection, dispatch])
 
 
-  const click = () => {
-    console.log('clicked')
-    dispatch(doctorNextThunk(1,1))
+  /** TESTING CODE FOR A FAKE DOCTOR AND PHARMACY BUTTON TO BE REMOVED */
+  const clickPharmacy = () => {
+    emit("NEXT", { business: connection.business, doctor: "pharmacy" })
   }
-
-  const [pageMode, setPageMode] = useState("CHECKIN")
+  /** TESTING CODE FOR A FAKE DOCTOR AND PHARMACY BUTTON TO BE REMOVED */
+  const clickDoctor = () => {
+    emit("NEXT", connection)
+  }
+  /** TESTING CODE FOR A FAKE DOCTOR AND PHARMACY BUTTON TO BE REMOVED */
 
   return (
     <>
-    action page
-    <Button onClick={click}>clicky clicky</Button>
-       {queueStore.state === "CHECKIN" ? <Checkin /> : ""}
-       {queueStore.state === "DOCTOR" ? <InQueue queuePosition={queueStore.queuePosition}/> : ""}
-       {queueStore.state === "PHARMACY" ? <Pharmacy /> : ""}
-    
-      {/* <Button onClick={() => { dispatch(checkOut()) }}>Checkout - testing</Button> */}
-      {/* <Button onClick={() => { socket.emit("NEXT", { ...queueStore }) }}>advance the doctors queue</Button>
-       {/* <Button onClick={() => { socket.emit("CHECKIN", { ...queueStore }) }}>check in socket </Button> */}
-       {/* <Button onClick={() => { socket.emit("JOIN_ROOM", { ...queueStore }) }}>join room </Button> */}
-     </>
+      {state === "CHECKIN" ? <Checkin /> : ""}
+      {state === "DOCTOR" ? <InQueue /> : ""}
+      {state === "PHARMACY" ? <Pharmacy /> : ""}
+      {state === "REVIEW" ? <Review /> : ""}
+
+
+      {/** TESTING CODE FOR A FAKE DOCTOR AND PHARMACY BUTTON TO BE REMOVED */}
+      <div>
+        <Button onClick={clickDoctor}>Doctor next</Button>
+        <Button onClick={clickPharmacy}>Pharmacy next</Button>
+      </div>
+      {/** TESTING CODE FOR A FAKE DOCTOR AND PHARMACY BUTTON TO BE REMOVED */}
+    </>
   );
 }
