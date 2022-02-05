@@ -60,6 +60,7 @@ export default function ActivePage() {
 
       {/** TESTING CODE FOR A FAKE DOCTOR AND PHARMACY BUTTON TO BE REMOVED */}
       <div>
+      <Button className='buttonOne' onClick={clickDoctor}>In Queue</Button>
         <Button className='buttonOne' onClick={clickDoctor}>Doctor next</Button>
         <Button className='buttonOne' onClick={clickPharmacy}>Pharmacy next</Button>
       </div>

@@ -1,4 +1,4 @@
-export const UPDATE_CONNECTION = 'UPDATE_CONECTION';
+export const UPDATE_CONNECTION = 'UPDATE_CONNECTION';
 
 export function setConnection(data) {
     return {
