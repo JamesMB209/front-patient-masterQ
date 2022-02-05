@@ -1,7 +1,6 @@
 import io from 'socket.io-client';
 
 
-// const address = token.slice(-10)
 
 /** Set up socket listeners here */
 export const UPDATE_PATIENT = "UPDATE_PATIENT";
