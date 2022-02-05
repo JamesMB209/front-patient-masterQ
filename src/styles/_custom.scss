@@ -28,7 +28,8 @@ h5 {
     color: $blueOne;
     height: 3px !important;
     width: 100px !important;
-    
+    margin-top: -9px !important;
+    @include center-all;
 }
 
 .buttonOne {
@@ -56,6 +57,7 @@ h5 {
     color: white !important;
     background-color: $blueThree !important;
 }
+
 
 
 

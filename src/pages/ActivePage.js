@@ -53,16 +53,16 @@ export default function ActivePage() {
 
   return (
     <>
+  
       {state === "CHECKIN" ? <Checkin /> : ""}
       {state === "DOCTOR" ? <InQueue /> : ""}
       {state === "PHARMACY" ? <Pharmacy /> : ""}
       {state === "REVIEW" ? <Review /> : ""}
 
-
       {/** TESTING CODE FOR A FAKE DOCTOR AND PHARMACY BUTTON TO BE REMOVED */}
       <div>
-        <Button onClick={clickDoctor}>Doctor next</Button>
-        <Button onClick={clickPharmacy}>Pharmacy next</Button>
+        <Button className='buttonOne' onClick={clickDoctor}>Doctor next</Button>
+        <Button className='buttonOne' onClick={clickPharmacy}>Pharmacy next</Button>
       </div>
       {/** TESTING CODE FOR A FAKE DOCTOR AND PHARMACY BUTTON TO BE REMOVED */}
     </>
