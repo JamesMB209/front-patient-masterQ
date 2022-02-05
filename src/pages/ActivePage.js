@@ -7,11 +7,9 @@ import { Button } from "react-bootstrap";
 import Pharmacy from "../components/Pharmacy";
 import Checkin from "../components/Checkin";
 import InQueue from "../components/InQueue";
-import { Review } from "../components/Review";
+import Review from "../components/Review";
 
-import { emit } from '../redux/webSockets/actions'
-import { socket } from "../redux/webSockets/actions";
-import { UPDATE_PATIENT } from "../redux/webSockets/actions";
+import { emit, socket, UPDATE_PATIENT } from '../redux/webSockets/actions'
 import { loadObjThunk } from "../redux/patientObj/actions";
 
 
@@ -23,6 +21,7 @@ export default function ActivePage() {
   const auth = useSelector((state) => state.authStore.isAuthenticated);
   const state = useSelector((state) => state.patientObjStore.state);
   const connection = useSelector((state) => state.connectionStore)
+  const [CHECKIN, DOCTOR, PHARMACY, REVIEW] = ["CHECKIN", "DOCTOR", "PHARMACY", "REVIEW"]
 
   /** Check logged in */
   useEffect(() => {
@@ -33,12 +32,13 @@ export default function ActivePage() {
 
   /** Set up listners */
   useEffect(() => {
-    console.log(connection)
-    socket.on(UPDATE_PATIENT, () => { dispatch(loadObjThunk(connection)) })
+    if ([CHECKIN, DOCTOR, PHARMACY].includes(state)) {
+      socket.on(UPDATE_PATIENT, () => { dispatch(loadObjThunk(connection)) })
+    }
     return () => {
       socket.off(UPDATE_PATIENT)
     }
-  }, [connection, dispatch])
+  }, [state, connection, dispatch])
 
 
   /** TESTING CODE FOR A FAKE DOCTOR AND PHARMACY BUTTON TO BE REMOVED */
@@ -53,10 +53,10 @@ export default function ActivePage() {
 
   return (
     <>
-      {state === "CHECKIN" ? <Checkin /> : ""}
-      {state === "DOCTOR" ? <InQueue /> : ""}
-      {state === "PHARMACY" ? <Pharmacy /> : ""}
-      {state === "REVIEW" ? <Review /> : ""}
+      {state === CHECKIN ? <Checkin /> : ""}
+      {state === DOCTOR ? <InQueue /> : ""}
+      {state === PHARMACY ? <Pharmacy /> : ""}
+      {state === REVIEW ? <Review /> : ""}
 
 
       {/** TESTING CODE FOR A FAKE DOCTOR AND PHARMACY BUTTON TO BE REMOVED */}
