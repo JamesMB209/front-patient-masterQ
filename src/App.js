@@ -27,7 +27,7 @@ function App() {
     if (isAuthenticated === true) {
       dispatch(loadConfigThunk())
     }
-  });
+  }, [dispatch, isAuthenticated]);
 
   return (
     <BrowserRouter>
