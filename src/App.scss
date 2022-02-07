@@ -32,13 +32,17 @@ body {
   min-height: 100%;
 }
 
+p {
+  color: $blueTwo;
+}
+
 #root {
   height: 100%;
 }
 
 .navbar {
   background-color: $blueOne;
-  height: 10vh;
+  
 }
 
 .nav-item {

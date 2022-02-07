@@ -5,7 +5,6 @@
     @include box;
 }
 
-
 .login-img {
     width: 80%;
     margin-top: 20%;
@@ -15,26 +14,42 @@
 
 .queue_box {
     text-align: center;
-    border: 2px solid $blueOne !important;
+    border: 2px solid $blueLight !important;
     @include box;
 }
 
-.overlap_box {
+.queue_box_ready {
+    text-align: center;
+    border: 2px solid $blueLight !important;
     background-color: $blueOne;
-    width: 70%;
-    height: 40%;
-    border-radius: 20px;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    padding: 25px;
-    margin-top: -100px;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    color: $white;
+    @include box;
+}
+
+.overlap_box_doctor {
+    background-color: $blueOne;
+    @include overlap_box;
+}
+
+.overlap_box_pharmacy {
+    background-color: $blueTwo;
+    @include overlap_box;
+}
+
+.overlap_box_ready {
+    background-color: $blueLight;
+    @include overlap_box;
 }
 
 .logo {
     width: 250px;
 }
 
+.ready_text {
+    line-height: 90px !important;
+    display: block;
+    margin-top: 10%;
+    font-size: 25px;
+}
 
 

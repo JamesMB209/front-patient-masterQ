@@ -12,9 +12,11 @@
   font-size: calc(10px + 2vmin);
   color: white;
 } */
+
 .navbar {
-  height: 5vh;
+  background-color: #00c4cc !important;
   text-decoration: none;
+  display: block !important;
 }
 
 .theme {

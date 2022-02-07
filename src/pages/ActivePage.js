@@ -4,7 +4,6 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { Button } from "react-bootstrap";
 
-import Pharmacy from "../components/Pharmacy";
 import Checkin from "../components/Checkin";
 import InQueue from "../components/InQueue";
 import Review from "../components/Review";
@@ -54,13 +53,12 @@ export default function ActivePage() {
   return (
     <>
       {state === CHECKIN ? <Checkin /> : ""}
-      {state === DOCTOR ? <InQueue /> : ""}
-      {state === PHARMACY ? <Pharmacy /> : ""}
+      {state === DOCTOR ? <InQueue page={DOCTOR} waitTime={5}/> : ""}
+      {state === PHARMACY ? <InQueue page={PHARMACY} waitTime={3}/> : ""}
       {state === REVIEW ? <Review /> : ""}
 
       {/** TESTING CODE FOR A FAKE DOCTOR AND PHARMACY BUTTON TO BE REMOVED */}
       <div>
-      <Button className='buttonOne' onClick={clickDoctor}>In Queue</Button>
         <Button className='buttonOne' onClick={clickDoctor}>Doctor next</Button>
         <Button className='buttonOne' onClick={clickPharmacy}>Pharmacy next</Button>
       </div>
