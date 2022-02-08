@@ -53,27 +53,24 @@ function App() {
             navbarScroll
           >
             
-            <Nav.Link href="/booking" className="nav-item mx-4"> <LaptopChromebookOutlinedIcon className="mx-2"/>
-              Online Booking</Nav.Link>
+            <Link to="/booking" className="nav-item mx-4"> <LaptopChromebookOutlinedIcon className="mx-2"/>
+              Online Booking</Link>
 
-            <Nav.Link href="/active" className="nav-item mx-4"> <FactCheckOutlinedIcon className="mx-2"/>
-              Checkin</Nav.Link>
+            <Link to="/active" className="nav-item mx-4"> <FactCheckOutlinedIcon className="mx-2"/>
+              Check-in</Link>
 
             {isAuthenticated
               ? (
-                <Nav.Link >
                   <Link to="/login" 
                   onClick={() => dispatch(logoutNowThunk())} className="nav-item mx-4">
                     <LogoutOutlinedIcon className="mx-2"/>
                     Logout</Link>
-                </Nav.Link>
               )
               : (
-                <Nav.Link >
                   <Link to="/login" className="nav-item mx-4">
                   <LogoutOutlinedIcon className="mx-2"/>
-                  Login/SignUp</Link>
-                </Nav.Link>
+                  Login / SignUp</Link>
+                
               )}
 
             {/* {isAuthenticated
