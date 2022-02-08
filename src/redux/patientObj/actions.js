@@ -17,7 +17,6 @@ export function loadObjThunk(data) {
             }
         })
             .then((response) => {
-                console.log(response)
                 return dispatch({
                     type: LOAD_OBJ,
                     payload: response.data
@@ -34,8 +33,6 @@ export function loadObjThunk(data) {
 
 // not sure if I should move this into another catagory, but I want to effect the patientOBJ's status so ill leave it here because it contains the most relevant reducer.
 export function submitReviewThunk (data) {
-    console.log("trying to submit a review")
-    console.log(data)
     return (dispatch) => {
         return axios({
             method: 'post',
@@ -48,7 +45,6 @@ export function submitReviewThunk (data) {
             }
         })
             .then((response) => {
-                console.log(response)
                 return dispatch({
                     type: SUBMIT_REVIEW,
                 })

@@ -7,6 +7,8 @@ export const UPDATE_PATIENT = "UPDATE_PATIENT";
 
 /** Set up socket emitters here */
 export const CHECKIN = "CHECKIN";
+export const DOCTOR_ROOM = "DOCTOR_ROOM";
+export const PHARMACY_ROOM = "PHARMACY_ROOM";
 
 /** Use this for app wide automatic listners - currently nothing */
 const messageTypes = [].reduce( ( accum, msg ) =>     

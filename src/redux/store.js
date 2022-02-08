@@ -28,7 +28,7 @@ export const store = createStore(
   rootReducer, 
   compose(
     applyMiddleware(
-      logger,
+      // logger,
       thunk.withExtraArgument({emit}),
     )
   )

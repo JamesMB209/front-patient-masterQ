@@ -25,10 +25,10 @@ function App() {
 
   useEffect(() => {
     if (isAuthenticated === true) {
+      dispatch(loadConfigThunk())
     }
   }, [dispatch, isAuthenticated]);
   
-  dispatch(loadConfigThunk())
   
   return (
     <BrowserRouter>
@@ -60,42 +60,26 @@ function App() {
                 <Nav.Link href="/active" className="nav-item mx-4"> <FactCheckOutlinedIcon className="mx-2" />
                   Checkin</Nav.Link>
 
-                {isAuthenticated
-                  ? (
-                    <Nav.Link >
-                      <Link to="/login"
-                        onClick={() => dispatch(logoutNowThunk())} className="nav-item mx-4">
-                        <LogoutOutlinedIcon className="mx-2" />
-                        Logout</Link>
-                    </Nav.Link>
-                  )
-                  : (
-                    <Nav.Link >
-                      <Link to="/login" className="nav-item mx-4">
-                        <LogoutOutlinedIcon className="mx-2" />
-                        Login/SignUp</Link>
-                    </Nav.Link>
-                  )}
-
-                {/* {isAuthenticated
+                  {isAuthenticated
               ? (
-                  <Nav.Link 
-                  href="/login" 
-                  onClick={() => dispatch(logoutNowThunk())} className="nav-item mx-4"> <LogoutOutlinedIcon className="mx-2"/>
-                    Logout</Nav.Link>
+                  <Link to="/login" 
+                  onClick={() => dispatch(logoutNowThunk())} className="nav-item mx-4">
+                    <LogoutOutlinedIcon className="mx-2"/>
+                    Logout</Link>
               )
               : (
-                  <Nav.Link 
-                  href="/login" 
-                  className="nav-item"><LoginOutlinedIcon className="mx-2"/>
-                    Login/SignUp</Nav.Link>
-              )} */}
+                  <Link to="/login" className="nav-item mx-4">
+                  <LogoutOutlinedIcon className="mx-2"/>
+                  Login / SignUp</Link>
+
+              )}
               </Nav>
             </Navbar.Collapse>
           </Container>
         </Navbar>
 
         <Routes>
+          <Route path="/" element={<LoginPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/booking" element={<BookingPage />} />
           <Route path="/active" element={<ActivePage />} />

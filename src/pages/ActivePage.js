@@ -7,17 +7,14 @@ import { Button } from "react-bootstrap";
 import Checkin from "../components/Checkin";
 import InQueue from "../components/InQueue";
 import Review from "../components/Review";
-import { loadConfigThunk } from "../redux/appConfig/actions";
 
-import { emit, socket, UPDATE_PATIENT } from '../redux/webSockets/actions'
+import { emit, socket, UPDATE_PATIENT, DOCTOR_ROOM, PHARMACY_ROOM } from '../redux/webSockets/actions'
 import { loadObjThunk } from "../redux/patientObj/actions";
 
 
 export default function ActivePage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
-  dispatch(loadConfigThunk())
 
   /** Load inital states */
   const auth = useSelector((state) => state.authStore.isAuthenticated);
@@ -32,11 +29,25 @@ export default function ActivePage() {
     }
   }, [auth, navigate]);
 
-
   /** Set up listners */
   useEffect(() => {
-    if ([CHECKIN, DOCTOR, PHARMACY, REVIEW].includes(state)) {
-      socket.on(UPDATE_PATIENT, () => { dispatch(loadObjThunk(connection)) })
+    if ([CHECKIN, DOCTOR, PHARMACY].includes(state)) {
+      socket.on(UPDATE_PATIENT, () => { 
+        dispatch(loadObjThunk(connection)) 
+      })
+
+      switch (state) {
+        case DOCTOR:
+          emit(DOCTOR_ROOM, {...connection})
+          break;
+        case PHARMACY:
+          emit(PHARMACY_ROOM, {...connection})
+          break;
+        default:
+          break;
+      }
+
+
 
       /** TESTING CODE FOR A FAKE DOCTOR AND PHARMACY BUTTON TO BE REMOVED */
       socket.on("UPDATE_BUSINESS", () => { console.log("recieved a business update message.") })

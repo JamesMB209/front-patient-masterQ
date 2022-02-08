@@ -12,7 +12,6 @@ export function patientObjReducer(state = initialState, action) {
         case LOAD_OBJ:
             return Object.assign({}, state, { ...action.payload });
         case SUBMIT_REVIEW:
-            console.log("triggerted")
             return Object.assign({}, state, {state: 'CHECKIN'})
         default:
             return state;
