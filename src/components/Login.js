@@ -17,14 +17,14 @@ const Login = (props) => {
   const dispatch = useDispatch();
 
 
-  const auth = useSelector((state) => state.authStore.isAuthenticated);
-  const navigate = useNavigate();
+  // const auth = useSelector((state) => state.authStore.isAuthenticated);
+  // const navigate = useNavigate();
 
-  useEffect(() => {
-    if (auth !== true) {
-      navigate("/login");
-    }
-  }, [auth, navigate]);
+  // useEffect(() => {
+  //   if (auth !== true) {
+  //     navigate("/login");
+  //   }
+  // }, [auth, navigate]);
 
   const login = (e) => {
     e.preventDefault()

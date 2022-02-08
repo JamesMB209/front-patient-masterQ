@@ -16,7 +16,7 @@ import logo from './assets/logo-white.png'
 import LaptopChromebookOutlinedIcon from '@mui/icons-material/LaptopChromebookOutlined';
 import FactCheckOutlinedIcon from '@mui/icons-material/FactCheckOutlined';
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
-import LoginOutlinedIcon from '@mui/icons-material/LoginOutlined';
+// import LoginOutlinedIcon from '@mui/icons-material/LoginOutlined';
 
 function App() {
   const dispatch = useDispatch();
@@ -25,10 +25,11 @@ function App() {
 
   useEffect(() => {
     if (isAuthenticated === true) {
-      dispatch(loadConfigThunk())
     }
   }, [dispatch, isAuthenticated]);
-
+  
+  dispatch(loadConfigThunk())
+  
   return (
     <BrowserRouter>
       <div className="App">
@@ -47,36 +48,36 @@ function App() {
             <Navbar.Toggle aria-controls="navbarScroll" />
 
             <Navbar.Collapse id="navbarScroll">
-                <Nav
-            className="m-auto my-2 my-lg-0"
-            style={{ maxHeight: '120px' }}
-            navbarScroll
-          >
-            
-            <Nav.Link href="/booking" className="nav-item mx-4"> <LaptopChromebookOutlinedIcon className="mx-2"/>
-              Online Booking</Nav.Link>
+              <Nav
+                className="m-auto my-2 my-lg-0"
+                style={{ maxHeight: '120px' }}
+                navbarScroll
+              >
 
-            <Nav.Link href="/active" className="nav-item mx-4"> <FactCheckOutlinedIcon className="mx-2"/>
-              Checkin</Nav.Link>
+                <Nav.Link href="/booking" className="nav-item mx-4"> <LaptopChromebookOutlinedIcon className="mx-2" />
+                  Online Booking</Nav.Link>
 
-            {isAuthenticated
-              ? (
-                <Nav.Link >
-                  <Link to="/login" 
-                  onClick={() => dispatch(logoutNowThunk())} className="nav-item mx-4">
-                    <LogoutOutlinedIcon className="mx-2"/>
-                    Logout</Link>
-                </Nav.Link>
-              )
-              : (
-                <Nav.Link >
-                  <Link to="/login" className="nav-item mx-4">
-                  <LogoutOutlinedIcon className="mx-2"/>
-                  Login/SignUp</Link>
-                </Nav.Link>
-              )}
+                <Nav.Link href="/active" className="nav-item mx-4"> <FactCheckOutlinedIcon className="mx-2" />
+                  Checkin</Nav.Link>
 
-            {/* {isAuthenticated
+                {isAuthenticated
+                  ? (
+                    <Nav.Link >
+                      <Link to="/login"
+                        onClick={() => dispatch(logoutNowThunk())} className="nav-item mx-4">
+                        <LogoutOutlinedIcon className="mx-2" />
+                        Logout</Link>
+                    </Nav.Link>
+                  )
+                  : (
+                    <Nav.Link >
+                      <Link to="/login" className="nav-item mx-4">
+                        <LogoutOutlinedIcon className="mx-2" />
+                        Login/SignUp</Link>
+                    </Nav.Link>
+                  )}
+
+                {/* {isAuthenticated
               ? (
                   <Nav.Link 
                   href="/login" 
@@ -89,10 +90,10 @@ function App() {
                   className="nav-item"><LoginOutlinedIcon className="mx-2"/>
                     Login/SignUp</Nav.Link>
               )} */}
-                </Nav>
-              </Navbar.Collapse>
-            </Container>
-          </Navbar>
+              </Nav>
+            </Navbar.Collapse>
+          </Container>
+        </Navbar>
 
         <Routes>
           <Route path="/login" element={<LoginPage />} />
