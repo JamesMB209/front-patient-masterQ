@@ -1,10 +1,10 @@
 import Modal from 'react-bootstrap/Modal';
 import { useDispatch } from 'react-redux';
 import { useState } from 'react';
-import Button from 'react-bootstrap/Button';
 import { signupThunk } from '../redux/auth/actions';
-import Form from 'react-bootstrap/Form'
+import { InputGroup, Feedback, Form, Button, Row, Col } from 'react-bootstrap';
 
+import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
 
 export default function SignUp(props) {
   const dispatch = useDispatch();
@@ -18,6 +18,28 @@ export default function SignUp(props) {
   const [dob, setDob] = useState("");
   const [phone, setPhone] = useState("");
   const [drugAllergies, setDrugAllergies] = useState("");
+
+   //input validation
+   const [validated, setValidated] = useState(false);
+
+   const handleSubmit = (event) => {
+     console.log(event)
+     const form = event.currentTarget;
+     if (form.checkValidity() === false) {
+       event.preventDefault();
+       event.stopPropagation();
+     }
+ 
+     setValidated(true);
+   };
+
+  //show / hide password
+  const [passwordShown, setPasswordShown] = useState(false);
+   const togglePassword = () => {
+    setPasswordShown(!passwordShown);
+  };
+
+ 
 
   const signUp = () => {
     let patient = {
@@ -35,105 +57,187 @@ export default function SignUp(props) {
     dispatch(signupThunk(patient));
   }
 
-
   return (
     <Modal
-      {...props}
-      size="lg"
-      aria-labelledby="contained-modal-title-vcenter"
-      centered
-    >
-      <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter">
-          Sign Up
-          - required *
-        </Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <Form className='row'>
-          <Form.Group className="mb-3" controlId="signUpForm">
-            <Form.Label>First name*</Form.Label>
-            <Form.Control 
-            required 
-            placeholder="Enter first name" 
+    {...props}
+    size="lg"
+    aria-labelledby="contained-modal-title-vcenter"
+    centered
+  >
+    <Modal.Header closeButton>
+      <h3 id="contained-modal-title-vcenter">
+        Sign Up
+      </h3>
+    </Modal.Header>
+
+    <Modal.Body>
+    <Form 
+    noValidate 
+    validated={validated} 
+    onSubmit={handleSubmit}>
+      <Row>
+
+        <Form.Group as={Col} md="6" controlId="validationCustom01"
+        className="my-2">
+          <Form.Label>First name</Form.Label>
+          <Form.Control
+            required
+            type="text"
+            placeholder="First name"
             value={firstName} 
-            onChange={(e) => { setFirstName(e.target.value) }} />
+            onChange={(e) => { setFirstName(e.target.value) }}
+          />
+          <Form.Control.Feedback></Form.Control.Feedback>
+        </Form.Group>
 
-            <Form.Label>Last name*</Form.Label>
-            <Form.Control 
+        <Form.Group as={Col} md="6" controlId="validationCustom02"
+        className="my-2">
+          <Form.Label>Last name</Form.Label>
+          <Form.Control
             required
-            placeholder="Enter last name" 
+            type="text"
+            placeholder="Last name"
             value={lastName} 
-            onChange={(e) => { setLastName(e.target.value) }} />
+            onChange={(e) => { setLastName(e.target.value) }}
+          />
+          <Form.Control.Feedback></Form.Control.Feedback>
+        </Form.Group>
 
-            <Form.Label>HKID*</Form.Label>
-            <Form.Control 
+        <Form.Group as={Col} md="6" className="my-2" controlId="validationGender">
+        <Form.Label>Gender</Form.Label>
+        {['radio'].map((type) => (
+          <div key={`inline-${type}`} className="my-3">
+            <Form.Check
             required
-            placeholder="M1234561" 
-            value={hkid} 
-            onChange={(e) => { setHkid(e.target.value) }} />
+              inline
+              label="Female"
+              name="group1"
+              value="female"
+              type={type}
+              id={`inline-${type}-1`}
+            />
+            <Form.Check
+              inline
+              label="Male"
+              name="group1"
+              value="male"
+              type={type}
+              id={`inline-${type}-2`}
+            />
+          </div>
+        ))}
+      </Form.Group>
 
-            <Form.Label>Email*</Form.Label>
-            <Form.Control 
-            required
-            placeholder="example@example.com" 
-            value={email} 
-            onChange={(e) => { setEmail(e.target.value) }} />
+        <Form.Group as={Col} md="6" controlId="validationCustomUsername"
+        className="my-2">
+          <Form.Label>HKID</Form.Label>
+          <InputGroup hasValidation>
+            <Form.Control
+              type="text"
+              required
+              placeholder="M1234561" 
+              value={hkid} 
+              maxLength="8"
+              onChange={(e) => { setHkid(e.target.value) }}
+                />
+            <Form.Control.Feedback type="invalid">
+              Please input HKID number without the bracket
+            </Form.Control.Feedback>
+          </InputGroup>
+        </Form.Group>
+      </Row>
+     
+        <Form.Group as={Col} md="12" controlId="validationCustom03"
+        className="my-1">
+          <Form.Label>Email</Form.Label>
+          <Form.Control 
+          type="email" 
+          required
+          placeholder="example@example.com" 
+          value={email} 
+          onChange={(e) => { setEmail(e.target.value) }}  />
+          <Form.Control.Feedback type="invalid">
+            Please enter your email
+          </Form.Control.Feedback>
+        </Form.Group>
 
-            <Form.Label>Password*</Form.Label>
-            <Form.Control 
-            required
-            placeholder="Password" 
-            value={password} 
-            onChange={(e) => { setPassword(e.target.value) }} />
-            <Form.Text id="passwordHelpBlock" muted>
-              Your password must be 8-20 characters long, contain letters and numbers, and
-              must not contain spaces, special characters, or emoji.
-            </Form.Text><br />
+        <div className="pass-wrapper">
+        <Form.Group as={Col} md="12" controlId="validationCustom04"
+        className="my-2">
+          <Form.Label>Password</Form.Label>
+          <Form.Control 
+          required
+          placeholder="Password" 
+          maxLength="20"
+          minLength="8"
+          type={passwordShown ? "text" : "password"}
+          value={password} 
+          onChange={(e) => { setPassword(e.target.value) }} />
+          <VisibilityOffOutlinedIcon 
+          onClick={togglePassword} 
+          className='show_password'/>
+          <Form.Control.Feedback type="invalid">
+            Please enter password
+          </Form.Control.Feedback>
+        </Form.Group>
+        </div>
+        <Form.Text id="passwordHelpBlock" muted>
+            Your password must be 8-20 characters long.
+          </Form.Text>
 
-            {/* Gender */}
-            <Form.Label>Gender</Form.Label>
-            <Form.Select 
-            value={gender} 
-            onChange={(e) => { setGender(e.target.value) }}>
-              <option value="">Choose gender</option>
-              <option value="male">Male</option>
-              <option value="female">Female</option>
-            </Form.Select>
-            {/* <Form.Control placeholder="Gender" value={gender} onChange={(e) => { setGender(e.target.value) }} /> */}
+        {/* DOB */}
+        <Form.Group controlId="validationDob"
+        className="my-2">
+          <Form.Label>Date of Birth</Form.Label>
+          <Form.Control 
+          type="date" 
+          value={dob} 
+          //value="1995-01-01"
+          onChange={(e) => { setDob(e.target.value) }}
+          required />
+          <Form.Control.Feedback type="invalid">
+            Please enter your date of birth
+          </Form.Control.Feedback>
+        </Form.Group>
 
-            {/* DOB */}
-            <Form.Label>Date of birth</Form.Label>
-            <Form.Control 
-            type="date" 
-            value={dob} 
-            onChange={(e) => { setDob(e.target.value) }} />
+        {/* Phone */}
+        <Form.Group
+        controlId="validationPhone"
+        className="my-2">
+          <Form.Label>Phone</Form.Label>
+          <Form.Control 
+          type="tel" 
+          value={phone} 
+          onChange={(e) => { setPhone(e.target.value) }}
+          required />
+          <Form.Control.Feedback type="invalid">
+            Please enter your phone number
+          </Form.Control.Feedback>
+        </Form.Group>
 
-            {/* Phone */}
-            <Form.Label>Phone number</Form.Label>
-            <Form.Control 
-            value={phone} 
-            onChange={(e) => { setPhone(e.target.value) }} />
+        <Form.Group className="my-2 mb-4">
+          <Form.Label>Drug Allergies</Form.Label>
+          <Form.Control 
+          type="text" 
+          value={drugAllergies} 
+          onChange={(e) => { setDrugAllergies(e.target.value) }}
+         />
+        </Form.Group>
 
-            {/* Drug Allerges */}
-            <Form.Label>Drug Allergies</Form.Label>
-            <Form.Control 
-            value={drugAllergies} 
-            onChange={(e) => { setDrugAllergies(e.target.value) }} />
+      <Button 
+       className="mx-1 buttonOne align-self-end"  
+       type="submit" 
+       onClick={(e) => {
+        signUp();
+        console.log("clicked")
+        // props.onHide();
+      }}> Sign Up
+      </Button>
 
-          </Form.Group>
-        </Form>
-      </Modal.Body>
-      <Modal.Footer>
-        <Button className="mx-1 buttonOne" variant="primary" type="submit" onClick={(e) => {
-          signUp();
-          console.log("clicked")
-          // props.onHide();
-        }}>
-          Sign Up
-        </Button>
-        <Button onClick={props.onHide} variant="secondary">Close</Button>
-      </Modal.Footer>
-    </Modal>
+      <Button
+      onClick={props.onHide} variant="secondary">Close</Button>
+    </Form>
+    </Modal.Body>
+  </Modal>
   );
 }

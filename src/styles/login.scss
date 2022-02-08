@@ -52,4 +52,20 @@
     font-size: 25px;
 }
 
+.pass-wrapper {
+    position: relative;
+
+  }
+
+  .show_password {
+      color: $blueOne;
+      position: absolute;
+      top: 55%;
+      right: 6%;
+  }
+
+  .show_password:hover {
+    color: $blueTwo;
+    cursor: pointer;
+  }
 

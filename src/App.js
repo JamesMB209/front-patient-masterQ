@@ -48,19 +48,19 @@ function App() {
             <Navbar.Toggle aria-controls="navbarScroll" />
 
             <Navbar.Collapse id="navbarScroll">
-              <Nav
-                className="m-auto my-2 my-lg-0"
-                style={{ maxHeight: '120px' }}
-                navbarScroll
-              >
+                <Nav
+            className="m-auto my-2 my-lg-0"
+            style={{ maxHeight: '120px' }}
+            navbarScroll
+          >
+            
+            <Link to="/booking" className="nav-item mx-4"> <LaptopChromebookOutlinedIcon className="mx-2"/>
+              Online Booking</Link>
 
-                <Nav.Link href="/booking" className="nav-item mx-4"> <LaptopChromebookOutlinedIcon className="mx-2" />
-                  Online Booking</Nav.Link>
+            <Link to="/active" className="nav-item mx-4"> <FactCheckOutlinedIcon className="mx-2"/>
+              Check-in</Link>
 
-                <Nav.Link href="/active" className="nav-item mx-4"> <FactCheckOutlinedIcon className="mx-2" />
-                  Checkin</Nav.Link>
-
-                  {isAuthenticated
+            {isAuthenticated
               ? (
                   <Link to="/login" 
                   onClick={() => dispatch(logoutNowThunk())} className="nav-item mx-4">
@@ -71,15 +71,28 @@ function App() {
                   <Link to="/login" className="nav-item mx-4">
                   <LogoutOutlinedIcon className="mx-2"/>
                   Login / SignUp</Link>
-
+                
               )}
-              </Nav>
-            </Navbar.Collapse>
-          </Container>
-        </Navbar>
+
+            {/* {isAuthenticated
+              ? (
+                  <Nav.Link 
+                  href="/login" 
+                  onClick={() => dispatch(logoutNowThunk())} className="nav-item mx-4"> <LogoutOutlinedIcon className="mx-2"/>
+                    Logout</Nav.Link>
+              )
+              : (
+                  <Nav.Link 
+                  href="/login" 
+                  className="nav-item"><LoginOutlinedIcon className="mx-2"/>
+                    Login/SignUp</Nav.Link>
+              )} */}
+                </Nav>
+              </Navbar.Collapse>
+            </Container>
+          </Navbar>
 
         <Routes>
-          <Route path="/" element={<LoginPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/booking" element={<BookingPage />} />
           <Route path="/active" element={<ActivePage />} />

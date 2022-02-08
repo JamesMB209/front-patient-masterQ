@@ -8,7 +8,7 @@ import Button from 'react-bootstrap/Button';
 import Stack from 'react-bootstrap/Stack';
 import SignUp from './Signup';
 
-
+import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
 
 const Login = (props) => {
   const [modalShow, setModalShow] = useState(false);
@@ -16,6 +16,10 @@ const Login = (props) => {
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
 
+  const [passwordShown, setPasswordShown] = useState(false);
+  const togglePassword = () => {
+   setPasswordShown(!passwordShown);
+ };
 
   // const auth = useSelector((state) => state.authStore.isAuthenticated);
   // const navigate = useNavigate();
@@ -53,13 +57,25 @@ const Login = (props) => {
         <hr className="under-line text-center"/>
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>Email</Form.Label>
-          <Form.Control placeholder="Email" value={email} onChange={(e) => { setEmail(e.target.value) }} />
+          <Form.Control 
+            placeholder="Email" 
+            value={email} 
+            onChange={(e) => { setEmail(e.target.value) }} />
         </Form.Group>
 
+        <div className="pass-wrapper">
         <Form.Group className="mb-3" controlId="formBasicPassword">
           <Form.Label>Password</Form.Label>
-          <Form.Control placeholder="Password" value={password} onChange={(e) => { setPassword(e.target.value) }} />
+          <Form.Control 
+            type={passwordShown ? "text" : "password"}
+            placeholder="Password" 
+            value={password} 
+            onChange={(e) => { setPassword(e.target.value) }} />
+            <VisibilityOffOutlinedIcon 
+            onClick={togglePassword} 
+            className='show_password'/>
         </Form.Group>
+        </div>
 
         <div className='d-flex justify-content-center'>
 
