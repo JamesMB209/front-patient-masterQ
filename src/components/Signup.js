@@ -28,6 +28,8 @@ export default function SignUp(props) {
      if (form.checkValidity() === false) {
        event.preventDefault();
        event.stopPropagation();
+     } else {
+       signUp();
      }
  
      setValidated(true);
@@ -106,13 +108,12 @@ export default function SignUp(props) {
         <Form.Group as={Col} md="6" className="my-2" controlId="validationGender">
         <Form.Label>Gender</Form.Label>
         {['radio'].map((type) => (
-          <div key={`inline-${type}`} className="my-3">
+          <div key={`inline-${type}`} value={gender}className="my-3">
             <Form.Check
-            required
               inline
               label="Female"
               name="group1"
-              value="female"
+              onClick={()=>{setGender("female")}}
               type={type}
               id={`inline-${type}-1`}
             />
@@ -120,7 +121,7 @@ export default function SignUp(props) {
               inline
               label="Male"
               name="group1"
-              value="male"
+              onClick={()=>{setGender("male")}}
               type={type}
               id={`inline-${type}-2`}
             />
@@ -227,11 +228,7 @@ export default function SignUp(props) {
       <Button 
        className="mx-1 buttonOne align-self-end"  
        type="submit" 
-       onClick={(e) => {
-        signUp();
-        console.log("clicked")
-        // props.onHide();
-      }}> Sign Up
+      > Sign Up
       </Button>
 
       <Button
