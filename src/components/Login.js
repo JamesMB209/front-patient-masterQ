@@ -66,6 +66,7 @@ const Login = (props) => {
         <div className="pass-wrapper">
         <Form.Group className="mb-3" controlId="formBasicPassword">
           <Form.Label>Password</Form.Label>
+          
           <Form.Control 
             type={passwordShown ? "text" : "password"}
             placeholder="Password" 
