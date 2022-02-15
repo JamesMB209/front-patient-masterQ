@@ -18,8 +18,8 @@ export default function Checkin() {
     const appConfig = useSelector((state) => state.appConfigStore);
 
     /** Business and doctor drop down tab states for form submission */
-    const [business, setBusiness] = useState('');
-    const [doctor, setDoctor] = useState('');
+    const [business, setBusiness] = useState(null);
+    const [doctor, setDoctor] = useState(null);
 
 
     return (
@@ -36,15 +36,13 @@ export default function Checkin() {
                                         value={business}
                                         onChange={(e) => { setBusiness(e.target.value) }}>
                                         <option value="">Select Clinic</option>
-
-                                        {appConfig ?
-                                            appConfig.business.map(business =>
+                                        {appConfig.business.length > 0
+                                            ? appConfig.business.map(business =>
                                                 <option
                                                     key={business.name}
                                                     value={business.id}>{business.name}
                                                 </option>)
-                                            :
-                                            <option>Nothing Loaded</option>}
+                                            : <option value="">Loading ...</option>}
                                     </Form.Select>
 
                                     <Form.Label>Doctor</Form.Label>

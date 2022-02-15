@@ -1,7 +1,5 @@
 import io from 'socket.io-client';
 
-
-
 /** Set up socket listeners here */
 export const UPDATE_PATIENT = "UPDATE_PATIENT";
 
@@ -19,7 +17,7 @@ const messageTypes = [].reduce( ( accum, msg ) =>
 );
 
 /** Create the socket instance on APP load. */
-const token = localStorage.getItem("token");
+export const token = localStorage.getItem("token");
 export const socket = io( process.env.REACT_APP_API_SERVER, {
         transports: ['websocket'],
         query: { token }

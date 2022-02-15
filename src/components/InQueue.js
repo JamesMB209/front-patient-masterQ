@@ -5,7 +5,6 @@ import login_img from '../assets/6.png';
 export default function InQueue(props) {
   /** Load inital stores */
   const patientObj = useSelector((state) => state.patientObjStore)
-  //console.log(props)
 
   return (
     <>
