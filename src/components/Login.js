@@ -1,104 +1,81 @@
-// import FacebookLogin from "react-facebook-login";
-import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { loginUserThunk /** ,loginFacebookThunk */} from "../redux/auth/actions";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button';
 import Stack from 'react-bootstrap/Stack';
-import SignUp from './Signup';
 
 import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
+import { loginUserThunk } from "../redux/auth/actions";
+import SignUp from './Signup';
 
-const Login = (props) => {
+
+export default function Login() {
+  const dispatch = useDispatch();
+
+   /** Load inital stores/page const */
   const [modalShow, setModalShow] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const dispatch = useDispatch();
-
   const [passwordShown, setPasswordShown] = useState(false);
+
+  /** Func for toggling display of password */
   const togglePassword = () => {
-   setPasswordShown(!passwordShown);
- };
+    setPasswordShown(!passwordShown);
+  };
 
-  // const auth = useSelector((state) => state.authStore.isAuthenticated);
-  // const navigate = useNavigate();
-
-  // useEffect(() => {
-  //   if (auth !== true) {
-  //     navigate("/login");
-  //   }
-  // }, [auth, navigate]);
-
+  /** Login button */
   const login = (e) => {
     e.preventDefault()
     dispatch(loginUserThunk(email, password));
   };
-  
-
-  // function componentClicked() {
-  //   console.log("clicked");
-  //   return null;
-  // }
-
-  // function responseFacebook(userInfo) {
-  //   console.log("response", userInfo);
-  //   if (userInfo.accessToken) {
-  //     dispatch(loginFacebookThunk(userInfo));
-  //   }
-  //   return null;
-  // }
 
   return (
-   <>
-    <div className='login_box d-flex'>
-      <Form className='justify-content-center'>
-        <h5>Log in</h5>
-        <hr className="under-line text-center"/>
-        <Form.Group className="mb-3" controlId="formBasicEmail">
-          <Form.Label>Email</Form.Label>
-          <Form.Control 
-            placeholder="Email" 
-            value={email} 
-            onChange={(e) => { setEmail(e.target.value) }} />
-        </Form.Group>
+      <div className='login_box d-flex'>
+        <Form className='justify-content-center'>
+          <h5>Log in</h5>
+          <hr className="under-line text-center" />
+          <Form.Group className="mb-3" controlId="formBasicEmail">
+            <Form.Label>Email</Form.Label>
+            <Form.Control
+              placeholder="Email"
+              value={email}
+              onChange={(e) => { setEmail(e.target.value) }} />
+          </Form.Group>
 
-        <div className="pass-wrapper">
-        <Form.Group className="mb-3" controlId="formBasicPassword">
-          <Form.Label>Password</Form.Label>
-          
-          <Form.Control 
-            type={passwordShown ? "text" : "password"}
-            placeholder="Password" 
-            value={password} 
-            onChange={(e) => { setPassword(e.target.value) }} />
-            <VisibilityOffOutlinedIcon 
-            onClick={togglePassword} 
-            className='show_password'/>
-        </Form.Group>
-        </div>
+          <div className="pass-wrapper">
+            <Form.Group className="mb-3" controlId="formBasicPassword">
+              <Form.Label>Password</Form.Label>
 
-        <div className='d-flex justify-content-center'>
+              <Form.Control
+                type={passwordShown ? "text" : "password"}
+                placeholder="Password"
+                value={password}
+                onChange={(e) => { setPassword(e.target.value) }} />
+              <VisibilityOffOutlinedIcon
+                onClick={togglePassword}
+                className='show_password' />
+            </Form.Group>
+          </div>
 
-        <Stack gap={3}>
-          <Button className="mx-1 mt-3 buttonOne"  type="submit" onClick={(e) => { login(e) }}>
-            Login
-          </Button>
-          
-          <Button className="mx-1 buttonTwo"  onClick={() => setModalShow(true)}>
-            Sign Up
-          </Button>
-          </Stack>
+          <div className='d-flex justify-content-center'>
 
-        </div>
-        <SignUp
-          show={modalShow}
-          onHide={() => setModalShow(false)}
-        />
-      </Form>
-    </div>
-   </>
+            <Stack gap={3}>
+              <Button className="mx-1 mt-3 buttonOne" type="submit" onClick={(e) => { login(e) }}>
+                Login
+              </Button>
+
+              <Button className="mx-1 buttonTwo" onClick={() => setModalShow(true)}>
+                Sign Up
+              </Button>
+            </Stack>
+
+          </div>
+          <SignUp
+            show={modalShow}
+            onHide={() => setModalShow(false)}
+          />
+        </Form>
+      </div>
   );
 };
-
-export default Login;

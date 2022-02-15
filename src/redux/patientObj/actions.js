@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export const LOAD_OBJ = "LOAD_OBJ";
-export const SUBMIT_REVIEW = "SUBMIT_REVEIW";
+export const SUBMIT_REVIEW = "SUBMIT_REVIEW";
 const token = localStorage.getItem("token");
 
 export function loadObjThunk(data) {

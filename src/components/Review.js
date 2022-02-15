@@ -1,28 +1,31 @@
 import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import ToggleButton from 'react-bootstrap/ToggleButton'
 import ButtonGroup from 'react-bootstrap/ButtonGroup'
 import { Container, Row, Col } from "react-bootstrap";
+import happyFace from "../assets/icons8-happy-32.png";
+import indifferentFace from "../assets/icons8-confused-32.png";
+import sadFace from "../assets/icons8-sad-32.png";
 
 import { submitReviewThunk } from '../redux/patientObj/actions';
-import { useDispatch, useSelector } from 'react-redux';
 
 export default function Review() {
-    /** Will need to rember to update the state to "CHECKIN after submitting the review form" */
     const dispatch = useDispatch();
 
-    /** Load inital stores */
+    /** Load initial stores/page const */
     const appointmentHistoryID = useSelector((state) => state.patientObjStore.appointmentHistoryID);
     const [score, setScore] = useState('2');
     const [review, setReview] = useState();
-
     const radios = [
-        { name: 'sad', value: '1' },
-        { name: 'indiferent', value: '2' },
-        { name: 'happy', value: '3' },
+        { name: 'sad', value: '1', img: happyFace },
+        { name: 'indifferent', value: '2', img: indifferentFace },
+        { name: 'happy', value: '3', img: sadFace },
     ];
 
+    /** Submit button func */
     function submitForm() {
         dispatch(submitReviewThunk({
             appointmentHistoryID: appointmentHistoryID,
@@ -30,7 +33,7 @@ export default function Review() {
             review: review,
         }))
     }
-    
+
     return (
         <Container >
             <Row className='justify-content-center'>
@@ -46,13 +49,13 @@ export default function Review() {
                                             key={idx}
                                             id={`radio-${idx}`}
                                             type="radio"
-                                            variant="secondary"
+                                            variant="primary"
                                             name="radio"
                                             value={radio.value}
                                             checked={score === radio.value}
                                             onChange={(e) => setScore(e.currentTarget.value)}
                                         >
-                                            <p>&#129409</p>
+                                            <img src={radio.img} alt={radio.name}></img>
                                         </ToggleButton>
                                     ))}
                                 </ButtonGroup>
@@ -62,7 +65,6 @@ export default function Review() {
                                 <Form.Label>Comments</Form.Label>
                                 <Form.Control as="textarea" rows={5} value={review} onChange={(e) => { setReview(e.target.value) }} />
                             </Form.Group>
-
 
                             <Button className="mx-1 buttonTwo" onClick={submitForm}>
                                 Submit

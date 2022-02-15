@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 export default function BookingPage() {
   const navigate = useNavigate();
 
-  /** Load inital states */
+  /** Load initial stores/page const */
   const auth = useSelector((state) => state.authStore.isAuthenticated);
   const appConfig = useSelector((state) => state.appConfigStore);
 

@@ -5,7 +5,6 @@ import { useSelector, useDispatch } from "react-redux";
 import Checkin from "../components/Checkin";
 import InQueue from "../components/InQueue";
 import Review from "../components/Review";
-
 import { emit, socket, UPDATE_PATIENT, DOCTOR_ROOM, PHARMACY_ROOM } from '../redux/webSockets/actions'
 import { loadObjThunk } from "../redux/patientObj/actions";
 
@@ -14,7 +13,7 @@ export default function ActivePage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  /** Load inital states */
+  /** Load initial stores/page const */
   const auth = useSelector((state) => state.authStore.isAuthenticated);
   const state = useSelector((state) => state.patientObjStore.state);
   const connection = useSelector((state) => state.connectionStore)

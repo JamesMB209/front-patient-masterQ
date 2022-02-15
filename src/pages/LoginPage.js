@@ -10,7 +10,7 @@ import Login from "../components/Login";
 export default function LoginPage() {
   const navigate = useNavigate();
 
-  /** Load inital states */
+  /** Load initial stores/page const */
   const auth = useSelector((state) => state.authStore.isAuthenticated);
 
   /** Check logged in */

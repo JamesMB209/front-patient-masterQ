@@ -17,11 +17,12 @@ import logo from './assets/logo-white.png'
 import LaptopChromebookOutlinedIcon from '@mui/icons-material/LaptopChromebookOutlined';
 import FactCheckOutlinedIcon from '@mui/icons-material/FactCheckOutlined';
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
-// import LoginOutlinedIcon from '@mui/icons-material/LoginOutlined';
 
-function App() {
+
+export default function App() {
   const dispatch = useDispatch();
 
+  /** Load initial stores/page const */
   let isAuthenticated = useSelector((state) => state.authStore.isAuthenticated);
 
   useEffect(() => {
@@ -30,14 +31,13 @@ function App() {
     }
   }, [dispatch, isAuthenticated]);
 
-  /** Catch if the app was loaded without a valid token causeing socket to not connect after login */
+  /** Catch if the app was loaded without a valid token causing socket to not connect after login */
   useEffect(() => {
     if (isAuthenticated === true && token === null) {
       window.location.reload()
     }
   }, [dispatch, isAuthenticated]);
-  
-  console.log(token)
+
   return (
     <BrowserRouter>
       <div className="App">
@@ -56,49 +56,35 @@ function App() {
             <Navbar.Toggle aria-controls="navbarScroll" />
 
             <Navbar.Collapse id="navbarScroll">
-                <Nav
-            className="m-auto my-2 my-lg-0"
-            style={{ maxHeight: '120px' }}
-            navbarScroll
-          >
-            
-            <Link to="/booking" className="nav-item mx-4"> <LaptopChromebookOutlinedIcon className="mx-2"/>
-              Online Booking</Link>
+              <Nav
+                className="m-auto my-2 my-lg-0"
+                style={{ maxHeight: '120px' }}
+                navbarScroll
+              >
 
-            <Link to="/active" className="nav-item mx-4"> <FactCheckOutlinedIcon className="mx-2"/>
-              Check-in</Link>
+                <Link to="/booking" className="nav-item mx-4"> <LaptopChromebookOutlinedIcon className="mx-2" />
+                  Online Booking</Link>
 
-            {isAuthenticated
-              ? (
-                  <Link to="/login" 
-                  onClick={() => dispatch(logoutNowThunk())} className="nav-item mx-4">
-                    <LogoutOutlinedIcon className="mx-2"/>
-                    Logout</Link>
-              )
-              : (
-                  <Link to="/login" className="nav-item mx-4">
-                  <LogoutOutlinedIcon className="mx-2"/>
-                  Login / SignUp</Link>
-                
-              )}
+                <Link to="/active" className="nav-item mx-4"> <FactCheckOutlinedIcon className="mx-2" />
+                  Check-in</Link>
 
-            {/* {isAuthenticated
-              ? (
-                  <Nav.Link 
-                  href="/login" 
-                  onClick={() => dispatch(logoutNowThunk())} className="nav-item mx-4"> <LogoutOutlinedIcon className="mx-2"/>
-                    Logout</Nav.Link>
-              )
-              : (
-                  <Nav.Link 
-                  href="/login" 
-                  className="nav-item"><LoginOutlinedIcon className="mx-2"/>
-                    Login/SignUp</Nav.Link>
-              )} */}
-                </Nav>
-              </Navbar.Collapse>
-            </Container>
-          </Navbar>
+                {isAuthenticated
+                  ? (
+                    <Link to="/login"
+                      onClick={() => dispatch(logoutNowThunk())} className="nav-item mx-4">
+                      <LogoutOutlinedIcon className="mx-2" />
+                      Logout</Link>
+                  )
+                  : (
+                    <Link to="/login" className="nav-item mx-4">
+                      <LogoutOutlinedIcon className="mx-2" />
+                      Login / SignUp</Link>
+
+                  )}
+              </Nav>
+            </Navbar.Collapse>
+          </Container>
+        </Navbar>
 
         <Routes>
           <Route path="/login" element={<LoginPage />} />
@@ -109,5 +95,3 @@ function App() {
     </BrowserRouter>
   );
 }
-
-export default App;

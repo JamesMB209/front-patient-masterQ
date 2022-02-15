@@ -1,6 +1,6 @@
 import { createStore, combineReducers, compose, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
-import logger from "redux-logger";
+// import logger from "redux-logger";
 
 import { authReducer } from "./auth/reducers";
 import { appConfigReducer } from "./appConfig/reducers";
@@ -15,13 +15,6 @@ const rootReducer = combineReducers({
   patientObjStore: patientObjReducer,
   connectionStore: connectionReducer,
 });
-
-// const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-
-// export const store = createStore(
-//   rootReducer,
-//   composeEnhancers(applyMiddleware(thunk.withExtraArgument({emit})))
-// );
 
 /** create the store */
 export const store = createStore( 

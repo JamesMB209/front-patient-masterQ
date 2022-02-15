@@ -2,19 +2,17 @@ import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import { Button } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
 import Form from 'react-bootstrap/Form'
 
 import { setConnection } from "../redux/conection/actions";
-import { emit, CHECKIN, ROOM } from "../redux/webSockets/actions";
-
-import { Container, Row, Col } from "react-bootstrap";
-
+import { emit, CHECKIN } from "../redux/webSockets/actions";
 import login_img from '../assets/7.png';
 
 export default function Checkin() {
     const dispatch = useDispatch();
 
-    /** Load inital stores */
+     /** Load inital stores/page const */
     const appConfig = useSelector((state) => state.appConfigStore);
 
     /** Business and doctor drop down tab states for form submission */
@@ -23,7 +21,6 @@ export default function Checkin() {
 
 
     return (
-        <>
             <Container>
                 <Row>
                     <Col lg={5} sm={12}>
@@ -48,7 +45,7 @@ export default function Checkin() {
                                     <Form.Label>Doctor</Form.Label>
                                     <Form.Select value={doctor} onChange={(e) => { setDoctor(e.target.value) }}>
                                         <option value="">Select Doctor</option>
-                                        {appConfig.doctors.filter(doctor => doctor.business_id == business).map(doctor => <option key={doctor.l_name} value={doctor.id}>Dr. {doctor.l_name}</option>)}
+                                        {appConfig.doctors.filter(doctor => doctor.business_id.toString() === business).map(doctor => <option key={doctor.l_name} value={doctor.id}>Dr. {doctor.l_name}</option>)}
                                     </Form.Select>
 
                                     <Button className='buttonOne my-5' onClick={() => {
@@ -65,6 +62,5 @@ export default function Checkin() {
                     </Col>
                 </Row>
             </Container>
-        </>
     );
 };
