@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Routes, BrowserRouter, Link, Route, } from 'react-router-dom';
 
-import { Navbar, NavItem, Container, Nav } from 'react-bootstrap';
+import { Navbar, Container, Nav } from 'react-bootstrap';
 
 import LoginPage from './pages/LoginPage';
 import BookingPage from './pages/BookingPage';
@@ -10,6 +10,7 @@ import ActivePage from './pages/ActivePage';
 
 import { loadConfigThunk } from './redux/appConfig/actions';
 import { logoutNowThunk } from './redux/auth/actions';
+import { token } from './redux/webSockets/actions';
 
 import logo from './assets/logo-white.png'
 
@@ -28,8 +29,15 @@ function App() {
       dispatch(loadConfigThunk())
     }
   }, [dispatch, isAuthenticated]);
+
+  /** Catch if the app was loaded without a valid token causeing socket to not connect after login */
+  useEffect(() => {
+    if (isAuthenticated === true && token === null) {
+      window.location.reload()
+    }
+  }, [dispatch, isAuthenticated]);
   
-  
+  console.log(token)
   return (
     <BrowserRouter>
       <div className="App">
