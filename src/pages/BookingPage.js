@@ -19,9 +19,9 @@ export default function BookingPage() {
   const appConfig = useSelector((state) => state.appConfigStore);
 
   /** Business and doctor drop down tab states for form submission */
-  const [business, setBusiness] = useState(null);
-  const [doctor, setDoctor] = useState(null);
-  const [time, setTime] = useState(null);
+  const [business, setBusiness] = useState("");
+  const [doctor, setDoctor] = useState("");
+  const [time, setTime] = useState("");
   const [bookingSubmitted, setBookingSubmitted] = useState(false);
 
   /** Check logged in */
@@ -33,7 +33,6 @@ export default function BookingPage() {
 
   /** Booking button func - quick and dirty */
   const makeBooking = () => {
-    console.log(business, doctor, time)
     axios({
       method: 'post',
       url: `${process.env.REACT_APP_API_SERVER}/booking/submit`,
@@ -45,7 +44,6 @@ export default function BookingPage() {
       }
     })
       .then((res) => {
-        console.log('booking submitted')
         setBookingSubmitted(true)
       })
       .catch((err) => {

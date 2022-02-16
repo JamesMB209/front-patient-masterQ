@@ -16,8 +16,8 @@ export default function Checkin() {
     const appConfig = useSelector((state) => state.appConfigStore);
 
     /** Business and doctor drop down tab states for form submission */
-    const [business, setBusiness] = useState(null);
-    const [doctor, setDoctor] = useState(null);
+    const [business, setBusiness] = useState("");
+    const [doctor, setDoctor] = useState("");
 
 
     return (
