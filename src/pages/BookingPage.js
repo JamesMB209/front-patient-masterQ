@@ -101,7 +101,7 @@ export default function BookingPage() {
                 </Form.Group>
               </Form>
               : 
-              <p>Thank you, Booking has been confirmed</p>
+              <p>Thank you, your booking has been confirmed</p>
             }
 
           </div>
