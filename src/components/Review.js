@@ -20,9 +20,9 @@ export default function Review() {
     const [score, setScore] = useState('2');
     const [review, setReview] = useState();
     const radios = [
-        { name: 'sad', value: '1', img: happyFace },
+        { name: 'happy', value: '3', img: happyFace },
         { name: 'indifferent', value: '2', img: indifferentFace },
-        { name: 'happy', value: '3', img: sadFace },
+        { name: 'sad', value: '1', img: sadFace },
     ];
 
     /** Submit button func */
@@ -38,18 +38,19 @@ export default function Review() {
         <Container >
             <Row className='justify-content-center'>
                 <Col lg={5} sm={12}>
-                    <div className='queue_box pt-5'>
+                    <div className='review_box'>
                         <Form className='justify-content-center'>
-                            <h5>Review</h5>
+                            <h5 className='my-4'>Review</h5>
                             <hr className="under-line text-center" />
+
                             <Form.Group className="mb-3" controlId="formBasicSatisfaction">
-                                <ButtonGroup className="mb-2">
+                                <ButtonGroup className="m-3 mb-5 review_icon">
                                     {radios.map((radio, idx) => (
                                         <ToggleButton
                                             key={idx}
                                             id={`radio-${idx}`}
                                             type="radio"
-                                            variant="primary"
+                                            variant="secondary"
                                             name="radio"
                                             value={radio.value}
                                             checked={score === radio.value}
