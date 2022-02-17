@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import Checkin from "../components/Checkin";
 import InQueue from "../components/InQueue";
 import Review from "../components/Review";
-import { emit, socket, UPDATE_PATIENT, DOCTOR_ROOM, PHARMACY_ROOM } from '../redux/webSockets/actions'
+import { emit, socket, UPDATE_PATIENT, DOCTOR_ROOM, PHARMACY_ROOM, CHECKOUT } from '../redux/webSockets/actions'
 import { loadObjThunk } from "../redux/patientObj/actions";
 
 
@@ -32,6 +32,7 @@ export default function ActivePage() {
       socket.on(UPDATE_PATIENT, () => { 
         dispatch(loadObjThunk(connection)) 
       })
+    }
 
       switch (state) {
         case DOCTOR:
@@ -40,15 +41,17 @@ export default function ActivePage() {
         case PHARMACY:
           emit(PHARMACY_ROOM, {...connection})
           break;
+        case REVIEW:
+          emit(CHECKOUT, {...connection})
+          break;
         default:
           break;
       }
 
-    }
     return () => {
       socket.off(UPDATE_PATIENT)
     }
-  }, [state, connection, dispatch, CHECKIN, DOCTOR, PHARMACY])
+  }, [state, connection, dispatch, CHECKIN, DOCTOR, PHARMACY, REVIEW])
 
 
   return (

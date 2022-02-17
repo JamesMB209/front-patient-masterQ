@@ -17,8 +17,8 @@ export default function Review() {
 
     /** Load initial stores/page const */
     const appointmentHistoryID = useSelector((state) => state.patientObjStore.appointmentHistoryID);
-    const [score, setScore] = useState('2');
-    const [review, setReview] = useState();
+    const [score, setScore] = useState('3');
+    const [review, setReview] = useState('');
     const radios = [
         { name: 'happy', value: '3', img: happyFace },
         { name: 'indifferent', value: '2', img: indifferentFace },

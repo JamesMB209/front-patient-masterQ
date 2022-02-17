@@ -7,6 +7,7 @@ export const UPDATE_PATIENT = "UPDATE_PATIENT";
 export const CHECKIN = "CHECKIN";
 export const DOCTOR_ROOM = "DOCTOR_ROOM";
 export const PHARMACY_ROOM = "PHARMACY_ROOM";
+export const CHECKOUT = "CHECKOUT";
 
 /** Use this for app wide automatic listeners - currently nothing */
 const messageTypes = [].reduce( ( accum, msg ) =>     

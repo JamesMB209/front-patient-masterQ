@@ -39,7 +39,7 @@ export default function InQueue(props) {
                 <h3>Thank you for waiting</h3>
               </div>
               <h4 className="ready_text">
-                Please go to <br />
+                Please go to <br /> </h4>
                 {patientObj.state === "PHARMACY" ? (
                
                     <h4 className="ready_text">
@@ -61,7 +61,7 @@ export default function InQueue(props) {
                 <br />
                   for <br />
                 <strong>{patientObj.assigned.doctor}</strong>  */}
-              </h4>
+              
             </div>
           )}
         </Col>
