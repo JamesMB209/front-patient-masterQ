@@ -26,28 +26,31 @@ export default function ActivePage() {
     }
   }, [auth, navigate]);
 
-  /** Set up listners */
+  /** Set up socket */
   useEffect(() => {
+    /** Listen on the following pages */
     if ([CHECKIN, DOCTOR, PHARMACY].includes(state)) {
-      socket.on(UPDATE_PATIENT, () => { 
-        dispatch(loadObjThunk(connection)) 
+      socket.on(UPDATE_PATIENT, () => {
+        dispatch(loadObjThunk(connection))
       })
     }
 
-      switch (state) {
-        case DOCTOR:
-          emit(DOCTOR_ROOM, {...connection})
-          break;
-        case PHARMACY:
-          emit(PHARMACY_ROOM, {...connection})
-          break;
-        case REVIEW:
-          emit(CHECKOUT, {...connection})
-          break;
-        default:
-          break;
-      }
+    /** Update the socket room as the patient moves through the queue */
+    switch (state) {
+      case DOCTOR:
+        emit(DOCTOR_ROOM, { ...connection })
+        break;
+      case PHARMACY:
+        emit(PHARMACY_ROOM, { ...connection })
+        break;
+      case REVIEW:
+        emit(CHECKOUT, { ...connection })
+        break;
+      default:
+        break;
+    }
 
+    /** Close the listener so react dose not stack them on reloads */
     return () => {
       socket.off(UPDATE_PATIENT)
     }
